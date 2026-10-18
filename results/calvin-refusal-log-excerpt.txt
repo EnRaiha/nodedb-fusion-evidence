@@ -1,0 +1,18 @@
+# Server log of one failing COMMIT on origin/main d1e957217
+# Test: a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits (base, no fix), RUST_LOG=trace, --nocapture.
+# Whole run: 4645 lines. Level counts: TRACE 77, DEBUG 1360, INFO 3166, WARN 5.
+# WARN lines of the whole run: cluster transport without authentication, authorization lease at startup, three shutdown drain warnings.
+# None names the commit, a vShard that refused, or the error. The error text appears once, in the test's own panic line at the end.
+# Below: the lines from COMMIT to the panic, without connection-poll, epoch-tick and raft-append lines.
+
+2026-10-18T08:52:52.624511Z DEBUG tokio_postgres::simple_query: executing simple query: COMMIT
+2026-10-18T08:52:52.624742Z DEBUG nodedb::control::server::pgwire::handler::core::simple_query: session query dispatch db.id=0 db.name=default user=nodedb
+2026-10-18T08:52:52.629200Z DEBUG sequencer_replicate{epoch=1 txns_count=1}: nodedb_cluster::calvin::sequencer::service::epoch_mint: sequencer proposed epoch batch epoch=1 log_index=9 admitted=1 rejected=0
+2026-10-18T08:52:52.641187Z DEBUG nodedb::data::executor::handlers::control::calvin::static_stage: calvin stage for commit core=0 epoch=1 position=0 epoch_system_ms=1792313572629 vshard_id=543 plan_count=1 read_count=0
+2026-10-18T08:52:52.641408Z DEBUG nodedb::data::executor::handlers::control::calvin::static_stage: calvin stage for commit core=0 epoch=1 position=0 epoch_system_ms=1792313572629 vshard_id=607 plan_count=1 read_count=0
+2026-10-18T08:52:52.672467Z DEBUG nodedb::data::executor::handlers::control::calvin::discard: calvin drop: discarding staged commit core=0 epoch=1 position=0 vshard_id=543 existed=true
+2026-10-18T08:52:52.673629Z DEBUG nodedb::data::executor::handlers::control::calvin::discard: calvin drop: discarding staged commit core=0 epoch=1 position=0 vshard_id=607 existed=false
+2026-10-18T08:52:52.692303Z TRACE nodedb_cluster::calvin::sequencer::state_machine::apply: sequencer apply: completion ack epoch=1 position=0 vshard_id=543 from_node=1
+2026-10-18T08:52:52.692348Z TRACE nodedb_cluster::calvin::sequencer::state_machine::apply: sequencer apply: completion ack epoch=1 position=0 vshard_id=607 from_node=1
+thread 'cases::txn_bulk_prediction::a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits' (1812279) panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:126:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_del2'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"

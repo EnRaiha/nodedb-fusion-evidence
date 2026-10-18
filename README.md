@@ -23,6 +23,7 @@ Evidence for two defects in [NodeDB-Lab/nodedb](https://github.com/NodeDB-Lab/no
 | `probes/txn_bulk_survey.rs` | 13 probe tests for sibling shapes. Each prints `PROBE <name>: <outcome>` and asserts nothing |
 | `results/*-base.txt` | Test output on `origin/main` plus only the new tests |
 | `results/*-fix.txt` | Test output with the fix |
+| `results/calvin-refusal-log-excerpt.txt` | Server log of one failing `COMMIT` on `main`, with counts per level. See the next section |
 
 ## Results
 
@@ -84,3 +85,18 @@ cargo test -p nodedb --test inproc -- txn_bulk_survey --nocapture --test-threads
 ```
 
 The in-process and wire tests named above are in the PR.
+
+## Calvin refusal log
+
+The server logs nothing about the refusal in defect A. `results/calvin-refusal-log-excerpt.txt` holds the log of one failing `COMMIT` on `origin/main` `d1e957217`.
+
+- The run has 4,645 lines: 3,166 `INFO`, 1,360 `DEBUG`, 77 `TRACE`, 5 `WARN`.
+- The five `WARN` lines are the cluster transport without authentication, the authorization lease at startup, and three shutdown drain warnings. None names the commit.
+- `DEBUG` shows the stage start on vShards 543 and 607, then `discarding staged commit` for both, then a completion ack. No line says which vShard refused or why.
+- The error text appears once, in the test's own panic line.
+
+Capture method: the in-process test server installs a subscriber only when a test calls `nodedb_test_support::test_tracing::init()` and `RUST_LOG` is set. The capture adds that one call to the failing test and runs it with `RUST_LOG=trace` and `--nocapture`.
+
+```sh
+RUST_LOG=trace cargo test -p nodedb --test inproc -- a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits --nocapture
+```
