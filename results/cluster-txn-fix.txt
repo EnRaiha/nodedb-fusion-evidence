@@ -1,0 +1,3 @@
+test cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_delete_in_a_block_on_a_follower_reaches_every_node ... ok
+test cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_update_beside_an_edge_write_on_a_follower_reaches_every_node ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 11.57s

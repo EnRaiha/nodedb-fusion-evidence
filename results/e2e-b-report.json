@@ -1,0 +1,77 @@
+{
+  "base": {
+    "B1 SYNC AFTER": {
+      "steps": [
+        "ok",
+        "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'b_sync_g'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "B2 BEFORE": {
+      "steps": [
+        "ok",
+        "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'b_before_g'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "B3 SYNC AFTER, DELETE body": {
+      "steps": [
+        "ok",
+        "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'b_syncdel_g'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    }
+  },
+  "fix": {
+    "B1 SYNC AFTER": {
+      "steps": [
+        "ok",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 trig",
+        "d3 t3"
+      ]
+    },
+    "B2 BEFORE": {
+      "steps": [
+        "ok",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 trig",
+        "d3 t3"
+      ]
+    },
+    "B3 SYNC AFTER, DELETE body": {
+      "steps": [
+        "ok",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2"
+      ]
+    }
+  }
+}

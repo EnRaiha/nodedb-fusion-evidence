@@ -1,0 +1,9 @@
+REL R1 KV predicate UPDATE: stmt ok; COMMIT ok; SELECT key, n FROM kv1 -> a=9 b=2 c=9
+REL R2 KV predicate DELETE: stmt ok; COMMIT ok; SELECT key, n FROM kv1 -> b=2
+REL R3 columnar predicate UPDATE: stmt ok; COMMIT ok; SELECT id, v FROM col1 -> a=9 b=2 c=9
+REL R4 columnar predicate DELETE: stmt ok; COMMIT ok; SELECT id, v FROM col1 -> b=2
+REL R5 vector-primary predicate UPDATE: stmt ok; COMMIT ok; SELECT id, owner FROM vp -> v1=alice v2=dave v3=dave
+REL R6 vector-primary predicate DELETE: stmt ok; COMMIT ok; SELECT id, owner FROM vp -> v1=alice
+REL R7 procedure: predicate DELETE: CREATE ok; CALL ERR "ERROR: data plane error: Internal { detail: "internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g'; a Calvin bulk plan must be recon-injected before dispatch; g -> d0=t0 d1=t1 d2=t2 d3=t3
+REL R8 procedure: predicate UPDATE then DELETE: CREATE ok; CALL ERR "ERROR: data plane error: Internal { detail: "internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g'; a Calvin bulk plan must be recon-injected before dispatch; g -> d0=t0 d1=t1 d2=t2 d3=t3
+REL R9 async trigger body: INSERT ok; body applied true (61 ms); g -> d0=t0 d1=t1 d2=async d3=t3

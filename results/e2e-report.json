@@ -1,0 +1,246 @@
+{
+  "base": {
+    "A1 block DELETE": {
+      "steps": [
+        "ok",
+        "ok",
+        "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a1'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "A2 driver-managed block": {
+      "steps": [
+        "ok",
+        "ok",
+        "commit ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a2'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "B1 SYNC AFTER trigger body": {
+      "steps": [
+        "ok",
+        "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'b_sync_g'; a Calvin bulk plan must be recon-injected before dispatch"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "B2 BEFORE trigger body": {
+      "steps": [
+        "ERR trigger 'tb' already exists",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "C fusion": {
+      "node_ids": [
+        "a",
+        "19",
+        "b"
+      ]
+    },
+    "D durability": {
+      "first commits": {
+        "plain": [
+          "ok",
+          "ok"
+        ],
+        "calvin": [
+          "ok",
+          "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'dg'; a Calvin bulk plan must be recon-injected before dispatch"
+        ]
+      },
+      "after graceful restart": {
+        "dp": [
+          "d0 t0",
+          "d1 plain-commit",
+          "d2 t2",
+          "d3 t3"
+        ],
+        "dg": [
+          "d0 t0",
+          "d1 t1",
+          "d2 t2",
+          "d3 t3"
+        ]
+      },
+      "second commits": {
+        "plain": [
+          "ok",
+          "ok"
+        ],
+        "calvin": [
+          "ok",
+          "ERR internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'dg'; a Calvin bulk plan must be recon-injected before dispatch"
+        ]
+      },
+      "after SIGKILL": {
+        "dp": [
+          "d0 t0",
+          "d1 plain-commit",
+          "d2 before-kill",
+          "d3 t3"
+        ],
+        "dg": [
+          "d0 t0",
+          "d1 t1",
+          "d2 t2",
+          "d3 t3"
+        ]
+      }
+    },
+    "E cost": {
+      "rows": 3000,
+      "statement s": [
+        0.206,
+        0.203,
+        0.203
+      ],
+      "commit s": [
+        14.011,
+        13.353,
+        13.731
+      ],
+      "median statement s": 0.203,
+      "median commit s": 13.731
+    }
+  },
+  "fix": {
+    "A1 block DELETE": {
+      "steps": [
+        "ok",
+        "ok",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2"
+      ]
+    },
+    "A2 driver-managed block": {
+      "steps": [
+        "ok",
+        "ok",
+        "commit ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 drv",
+        "d3 t3"
+      ]
+    },
+    "B1 SYNC AFTER trigger body": {
+      "steps": [
+        "ok",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 trig",
+        "d3 t3"
+      ]
+    },
+    "B2 BEFORE trigger body": {
+      "steps": [
+        "ERR trigger 'tb' already exists",
+        "ok"
+      ],
+      "rows": [
+        "d0 t0",
+        "d1 t1",
+        "d2 t2",
+        "d3 t3"
+      ]
+    },
+    "C fusion": {
+      "node_ids": [
+        "a",
+        "lonely",
+        "b"
+      ]
+    },
+    "D durability": {
+      "first commits": {
+        "plain": [
+          "ok",
+          "ok"
+        ],
+        "calvin": [
+          "ok",
+          "ok"
+        ]
+      },
+      "after graceful restart": {
+        "dp": [
+          "d0 t0",
+          "d1 plain-commit",
+          "d2 t2",
+          "d3 t3"
+        ],
+        "dg": [
+          "d0 t0",
+          "d1 t1",
+          "d2 t2"
+        ]
+      },
+      "second commits": {
+        "plain": [
+          "ok",
+          "ok"
+        ],
+        "calvin": [
+          "ok",
+          "ok"
+        ]
+      },
+      "after SIGKILL": {
+        "dp": [
+          "d0 t0",
+          "d1 plain-commit",
+          "d2 before-kill",
+          "d3 t3"
+        ],
+        "dg": [
+          "d0 t0",
+          "d1 t1"
+        ]
+      }
+    },
+    "E cost": {
+      "rows": 3000,
+      "statement s": [
+        0.25,
+        0.251,
+        0.248
+      ],
+      "commit s": [
+        13.211,
+        12.582,
+        12.459
+      ],
+      "median statement s": 0.25,
+      "median commit s": 12.582
+    }
+  }
+}

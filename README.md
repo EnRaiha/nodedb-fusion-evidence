@@ -27,6 +27,12 @@ Evidence for two defects in [NodeDB-Lab/nodedb](https://github.com/NodeDB-Lab/no
 | `probes/txn_bulk_survey.rs` | 13 probe tests for sibling shapes. Each prints `PROBE <name>: <outcome>` and asserts nothing |
 | `results/*-base.txt` | Test output on `origin/main` plus only the new tests |
 | `results/*-fix.txt` | Test output with the fix |
+| `probes/txn_bulk_related.rs` | 9 probes for other engines, procedures and an async trigger body |
+| `probes/txn_bulk_adv.rs` | 8 probes: concurrent change, chained writes, an empty set, a 3,000-row set |
+| `results/related-base.txt`, `results/related-fix.txt` | Output of the related-area probes |
+| `results/adversarial-fix.txt` | Output of the concurrency and size probes on the fix |
+| `results/e2e-real-server.md` | A real server binary of each build, driven over pgwire |
+| `results/cluster-txn-base.txt`, `results/cluster-txn-fix.txt` | The three-node cases |
 | `results/calvin-refusal-log-excerpt.txt` | Server log of one failing `COMMIT` on `main`, with counts per level. See the next section |
 
 ## Results
@@ -104,3 +110,19 @@ Capture method: the in-process test server installs a subscriber only when a tes
 ```sh
 RUST_LOG=trace cargo test -p nodedb --test inproc -- a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits --nocapture
 ```
+
+## Related areas
+
+22 probes in all. 9 fail on the base with the same `XX000` error and all 9 commit with the fix: four block shapes, three trigger-body shapes (`SYNC AFTER` update and delete, `BEFORE` update) and two procedure shapes (`CALL` of a body with a predicate `DELETE`, or an `UPDATE` and a `DELETE`). 11 commit on the base already: `UPDATE ... FROM`, `MERGE`, predicate writes in KV, columnar and vector-primary collections, and an async trigger body. 2 are probe errors (`INSERT ... SELECT`, `DELETE ... IN (SELECT ...)`). The Calvin stage resolves columnar predicate DML itself, which is why that engine is not affected.
+
+## Concurrent change and size
+
+`results/adversarial-fix.txt`. Another session changes a row a block's statement matched, before `COMMIT`: the Calvin commit and the single-shard commit leave the same rows (`d2=A`), so the other session's write is overwritten in both. Another session makes a new row match: both leave that row untouched. A chained update, a delete of the updated row, an empty match set and a 3,000-row set (11.4 s against 11.2 s on a plain collection, debug build) all commit.
+
+## Real server and three nodes
+
+`results/e2e-real-server.md` holds the real-server run: the block, the driver-managed transaction, three trigger-body shapes, fusion, a graceful restart and a `SIGKILL`, and timing. The statement-time read adds about 47 ms to a 3,000-row statement. `results/cluster-txn-*.txt` holds two three-node cases: a block on a node that does not lead the collection, read back from every node. Both fail on the base at `COMMIT` and pass with the fix.
+
+## Open in a cluster
+
+The fusion fix names a hit in no edge by its key on a single node. In a three-node cluster one node still answers the surrogate number, because its catalog has no binding for that document. A repair is in progress and will land in the PR with its own test.

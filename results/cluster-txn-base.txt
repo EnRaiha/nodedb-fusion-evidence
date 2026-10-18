@@ -1,0 +1,7 @@
+test cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_delete_in_a_block_on_a_follower_reaches_every_node ... FAILED
+test cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_update_beside_an_edge_write_on_a_follower_reaches_every_node ... FAILED
+thread 'cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_delete_in_a_block_on_a_follower_reaches_every_node' panicked at nodedb-cluster-tests/tests/dml_suite/cases/../../sql_cluster_cross_node_dml_tests/txn_predicate_write_cross_node.rs:56:29:
+COMMIT: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'tpw_delete'; a Calvin bulk plan must be recon-injected before dispatch (XX000)
+thread 'cases::sql_cluster_cross_node_dml::txn_predicate_write_cross_node::a_predicate_update_beside_an_edge_write_on_a_follower_reaches_every_node' panicked at nodedb-cluster-tests/tests/dml_suite/cases/../../sql_cluster_cross_node_dml_tests/txn_predicate_write_cross_node.rs:56:29:
+COMMIT: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'tpw_update'; a Calvin bulk plan must be recon-injected before dispatch (XX000)
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 57 filtered out; finished in 11.00s

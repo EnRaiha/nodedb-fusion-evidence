@@ -1,0 +1,8 @@
+ADV C1 chain: steps ["ok", "ok", "ok"]; COMMIT ok; rows d0=t0 d1=y d3=t3
+ADV C2 empty set: COMMIT ok; rows d0=t0 d1=t1 d2=t2 d3=t3
+ADV L big n=3000 edge=true: UPDATE ok in 233 ms; COMMIT ok in 11450 ms; rows now 'new': 3000
+ADV L big n=3000 edge=false: UPDATE ok in 222 ms; COMMIT ok in 11229 ms; rows now 'new': 3000
+ADV S1 stale set, Calvin commit: B update ok; A COMMIT ok; rows d0=t0 d1=t1 d2=A d3=t3
+ADV S2 stale set, single-shard commit (control): B update ok; A COMMIT ok; rows d0=t0 d1=t1 d2=A d3=t3
+ADV S3 new matching row, Calvin commit: B update ok; A COMMIT ok; rows d0=t0 d1=t2 d2=A d3=t3
+ADV S4 new matching row, single-shard commit (control): B update ok; A COMMIT ok; rows d0=t0 d1=t2 d2=A d3=t3
