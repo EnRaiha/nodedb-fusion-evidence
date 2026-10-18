@@ -1,6 +1,10 @@
 # NodeDB: evidence for two defects on `origin/main` `d1e957217`
 
-Evidence for two defects in [NodeDB-Lab/nodedb](https://github.com/NodeDB-Lab/nodedb) and for the PR that fixes them. It holds the SQL that triggers each defect, the probe tests that map the sibling shapes, and the raw test output from `main` and from the fix.
+Evidence for two defects in [NodeDB-Lab/nodedb](https://github.com/NodeDB-Lab/nodedb) and for the PR that fixes them.
+
+- Issue [#424](https://github.com/NodeDB-Lab/nodedb/issues/424): both defects.
+- Issue [#425](https://github.com/NodeDB-Lab/nodedb/issues/425): the Calvin refusal is not logged on the node (see the last section).
+- Draft PR [#426](https://github.com/NodeDB-Lab/nodedb/pull/426): the fixes and the tests named below. It holds the SQL that triggers each defect, the probe tests that map the sibling shapes, and the raw test output from `main` and from the fix.
 
 ## The defects
 
