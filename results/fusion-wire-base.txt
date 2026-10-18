@@ -1,0 +1,19 @@
+running 11 tests
+test cases::graph_rag_fusion::documents_and_graph_nodes_each_report_their_own_name ... FAILED
+test cases::graph_rag_fusion::expansion_reaches_neighbours_of_vector_hits ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_graph_k_affects_expanded_node_score ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_returns_structured_result ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_rrf_k_pair_is_accepted ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_syntax_reaches_executor ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_vector_top_k_cap_enforced ... ok
+test cases::graph_rag_fusion::vector_and_text_hits_on_one_row_fuse_into_a_single_entry ... ok
+test cases::graph_rag_fusion::vector_only_hit_ranks_without_an_index_local_sentinel ... FAILED
+test cases::sql_three_source_rrf::graph_rag_fusion_bm25_leg_searches_the_named_field ... ok
+test cases::sql_three_source_rrf::graph_rag_fusion_three_source_returns_hits ... ok
+thread 'cases::graph_rag_fusion::documents_and_graph_nodes_each_report_their_own_name' panicked at nodedb/tests/wire/cases/graph_rag_fusion.rs:367:32:
+no result named lonely; got: {"results":[{"node_id":"a","rrf_score":0.03252247488101534,"vector_rank":1,"vector_distance":1.0,"hop_distance":0},{"node_id":"1","rrf_score":0.01639344262295082,"vector_rank":0,"vector_distance":0.0,"hop_distance":null},{"node_id":"b","rrf_score":0.016129032258064516,"vector_rank":null,"vector_distance":null,"hop_distance":1}],"metadata":{"vector_candidates":2,"graph_expanded":2,"truncated":false,"graph_unaddressable":0,"watermark_lsn":31}}
+thread 'cases::graph_rag_fusion::vector_only_hit_ranks_without_an_index_local_sentinel' panicked at nodedb/tests/wire/cases/graph_rag_fusion.rs:298:5:
+assertion `left == right` failed: a vector hit bound to no graph node must report its user PK, not a surrogate; got: {"results":[{"node_id":"1","rrf_score":0.01639344262295082,"vector_rank":0,"vector_distance":0.0,"hop_distance":null}],"metadata":{"vector_candidates":1,"graph_expanded":0,"truncated":false,"graph_unaddressable":0,"watermark_lsn":7}}
+  left: String("1")
+ right: "lonely"
+test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 2614 filtered out; finished in 51.28s

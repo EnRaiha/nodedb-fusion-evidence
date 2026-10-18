@@ -1,0 +1,14 @@
+PROBE E1 predicate UPDATE: COMMIT -> ok
+PROBE E2 predicate DELETE: COMMIT -> ok
+PROBE E3 UPDATE ... FROM: COMMIT -> ok
+PROBE E4 MERGE matched UPDATE: COMMIT -> ok
+PROBE E5 MERGE matched DELETE: COMMIT -> ok
+PROBE E6 INSERT ... SELECT: statement `INSERT INTO a SELECT id, title FROM b WHERE title = 't2'` -> ERR "ERROR: constraint violation: unique: duplicate key value '00000003' violates primary-key uniqueness on 'a' (SQLSTATE 23505)"
+PROBE E7 DELETE ... IN (SELECT): statement `DELETE FROM a WHERE id IN (SELECT id FROM b WHERE title = 't3')` -> ERR "ERROR: unsupported: expression: id IN (SELECT id FROM b WHERE title = 't3') (SQLSTATE 42601)"
+PROBE E8 UPDATE ... RETURNING: COMMIT -> ok
+PROBE E9 non-key UPDATE in two collections: COMMIT -> ok
+PROBE I1 MERGE DELETE into an edge-bearing collection, autocommit: ok
+PROBE I2 SYNC trigger body: predicate UPDATE: ok
+PROBE I3 SYNC trigger body: predicate DELETE: ok
+PROBE I4 BEFORE trigger body: predicate UPDATE: ok
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 1615 filtered out; finished in 36.11s

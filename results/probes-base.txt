@@ -1,0 +1,14 @@
+PROBE E1 predicate UPDATE: COMMIT -> ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE E2 predicate DELETE: COMMIT -> ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE E3 UPDATE ... FROM: COMMIT -> ok
+PROBE E4 MERGE matched UPDATE: COMMIT -> ok
+PROBE E5 MERGE matched DELETE: COMMIT -> ok
+PROBE E6 INSERT ... SELECT: statement `INSERT INTO a SELECT id, title FROM b WHERE title = 't2'` -> ERR "ERROR: constraint violation: unique: duplicate key value '00000003' violates primary-key uniqueness on 'a' (SQLSTATE 23505)"
+PROBE E7 DELETE ... IN (SELECT): statement `DELETE FROM a WHERE id IN (SELECT id FROM b WHERE title = 't3')` -> ERR "ERROR: unsupported: expression: id IN (SELECT id FROM b WHERE title = 't3') (SQLSTATE 42601)"
+PROBE E8 UPDATE ... RETURNING: COMMIT -> ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE E9 non-key UPDATE in two collections: COMMIT -> ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE I1 MERGE DELETE into an edge-bearing collection, autocommit: ok
+PROBE I2 SYNC trigger body: predicate UPDATE: ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE I3 SYNC trigger body: predicate DELETE: ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+PROBE I4 BEFORE trigger body: predicate UPDATE: ERR "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'a'; a Calvin bulk plan must be rec
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 1615 filtered out; finished in 32.87s

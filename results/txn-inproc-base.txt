@@ -1,0 +1,24 @@
+running 9 tests
+test cases::txn_bulk_prediction::a_before_trigger_body_predicate_update_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::a_delete_of_a_row_with_edges_in_an_edge_bearing_collection_commits ... FAILED
+test cases::txn_bulk_prediction::a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits ... FAILED
+test cases::txn_bulk_prediction::a_predicate_update_sees_a_row_the_same_block_inserted ... FAILED
+test cases::txn_bulk_prediction::a_sync_trigger_body_predicate_delete_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::a_sync_trigger_body_predicate_update_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::an_edge_insert_and_an_update_by_id_in_one_collection_commit_together ... FAILED
+test cases::txn_bulk_prediction::an_update_after_a_rolled_back_savepoint_commits_the_surviving_statements_only ... FAILED
+test cases::txn_bulk_prediction::an_update_by_id_in_a_plain_collection_still_commits ... ok
+thread 'cases::txn_bulk_prediction::a_before_trigger_body_predicate_update_commits_with_its_insert' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:238:10:
+thread 'cases::txn_bulk_prediction::a_delete_of_a_row_with_edges_in_an_edge_bearing_collection_commits' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:105:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_del'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"
+thread 'cases::txn_bulk_prediction::a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:125:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_del2'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"
+thread 'cases::txn_bulk_prediction::a_predicate_update_sees_a_row_the_same_block_inserted' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:154:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_ryw'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"
+thread 'cases::txn_bulk_prediction::a_sync_trigger_body_predicate_delete_commits_with_its_insert' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:238:10:
+thread 'cases::txn_bulk_prediction::a_sync_trigger_body_predicate_update_commits_with_its_insert' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:238:10:
+thread 'cases::txn_bulk_prediction::an_edge_insert_and_an_update_by_id_in_one_collection_commit_together' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:85:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_mix'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"
+thread 'cases::txn_bulk_prediction::an_update_after_a_rolled_back_savepoint_commits_the_surviving_statements_only' panicked at nodedb/tests/inproc/cases/txn_bulk_prediction.rs:190:33:
+COMMIT: "ERROR: internal error: calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection 'g_sp'; a Calvin bulk plan must be recon-injected before dispatch (SQLSTATE XX000)"
+test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 1609 filtered out; finished in 23.58s

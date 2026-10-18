@@ -1,0 +1,13 @@
+running 11 tests
+test cases::graph_rag_fusion::documents_and_graph_nodes_each_report_their_own_name ... ok
+test cases::graph_rag_fusion::expansion_reaches_neighbours_of_vector_hits ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_graph_k_affects_expanded_node_score ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_returns_structured_result ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_rrf_k_pair_is_accepted ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_syntax_reaches_executor ... ok
+test cases::graph_rag_fusion::graph_rag_fusion_vector_top_k_cap_enforced ... ok
+test cases::graph_rag_fusion::vector_and_text_hits_on_one_row_fuse_into_a_single_entry ... ok
+test cases::graph_rag_fusion::vector_only_hit_ranks_without_an_index_local_sentinel ... ok
+test cases::sql_three_source_rrf::graph_rag_fusion_bm25_leg_searches_the_named_field ... ok
+test cases::sql_three_source_rrf::graph_rag_fusion_three_source_returns_hits ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2614 filtered out; finished in 56.37s
