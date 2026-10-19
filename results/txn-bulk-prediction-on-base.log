@@ -1,0 +1,17 @@
+test cases::txn_bulk_prediction::a_before_trigger_body_predicate_update_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::a_delete_of_a_row_with_edges_in_an_edge_bearing_collection_commits ... FAILED
+test cases::txn_bulk_prediction::a_delete_of_a_row_without_edges_in_an_edge_bearing_collection_commits ... FAILED
+test cases::txn_bulk_prediction::a_predicate_delete_commits_in_best_effort_mode ... FAILED
+test cases::txn_bulk_prediction::a_predicate_update_commits_on_a_collection_with_a_before_row_trigger ... ok
+test cases::txn_bulk_prediction::a_predicate_update_commits_on_a_collection_with_a_sync_row_trigger ... ok
+test cases::txn_bulk_prediction::a_predicate_update_sees_a_row_the_same_block_inserted ... FAILED
+test cases::txn_bulk_prediction::a_procedure_body_predicate_delete_commits ... FAILED
+test cases::txn_bulk_prediction::a_procedure_body_predicate_update_and_delete_commit_together ... FAILED
+test cases::txn_bulk_prediction::a_sync_trigger_body_predicate_delete_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::a_sync_trigger_body_predicate_update_commits_with_its_insert ... FAILED
+test cases::txn_bulk_prediction::an_edge_insert_and_an_update_by_id_in_one_collection_commit_together ... FAILED
+test cases::txn_bulk_prediction::an_update_after_a_rolled_back_savepoint_commits_the_surviving_statements_only ... FAILED
+test cases::txn_bulk_prediction::an_update_by_id_in_a_plain_collection_still_commits ... ok
+test cases::txn_bulk_prediction::consecutive_blocks_on_one_session_leave_no_set_behind ... FAILED
+test cases::txn_bulk_prediction::two_predicate_writes_on_two_collections_each_carry_their_own_set ... FAILED
+test result: FAILED. 3 passed; 13 failed; 0 ignored; 0 measured; 1609 filtered out; finished in 38.04s

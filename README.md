@@ -123,6 +123,17 @@ RUST_LOG=trace cargo test -p nodedb --test inproc -- a_delete_of_a_row_without_e
 
 `results/e2e-real-server.md` holds the real-server run: the block, the driver-managed transaction, three trigger-body shapes, fusion, a graceful restart and a `SIGKILL`, and timing. The statement-time read adds about 47 ms to a 3,000-row statement. `results/cluster-txn-*.txt` holds two three-node cases: a block on a node that does not lead the collection, read back from every node. Both fail on the base at `COMMIT` and pass with the fix.
 
-## Open in a cluster
+## Cluster and the later defects (2026-10-19)
 
-The fusion fix names a hit in no edge by its key on a single node. In a three-node cluster one node still answers the surrogate number, because its catalog has no binding for that document. A repair is in progress and will land in the PR with its own test.
+The cluster gap is closed in PR #426: the owner reads each hit's key from its stored row and the coordinator names the row from it. A three-node case covers a vector hit, a text-only hit, a declared key not named `id`, and a key equal to its surrogate. Without the coordinator's rename, node 1 answered `"8193"` for the vector hit.
+
+A sweep of every path that submits to Calvin found more defects of the same family, now fixed in the PR and described in the update section of issue #424: HTTP, NDJSON, WebSocket and native predicate writes to a cross-shard sum source, two predicate writes in one request, the settlement read set, two writes that move one sum balance, the block commit route, and hybrid search and vector-primary keys on a node without the surrogate binding.
+
+| Result | Base | Fix |
+|---|---|---|
+| In-process `txn_bulk_prediction`, 16 tests (`results/txn-bulk-prediction-on-base.log`) | 13 fail, 3 pass | 16 pass |
+| Block commit, 5 interleavings of a second session | 2 fail | 5 pass |
+| Three-node search keys, 3 tests | 3 fail on node 1 | 3 pass |
+| Wire predicate write of a sum source over pgwire, HTTP, NDJSON and WebSocket | 3 of 4 fail with `XX000` | pass |
+
+The probes and results above remain from the first head of the branch.
