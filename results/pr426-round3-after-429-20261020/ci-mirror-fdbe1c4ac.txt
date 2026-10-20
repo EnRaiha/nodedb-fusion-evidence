@@ -1,0 +1,29 @@
+# Local mirror of the CI Test workflow on the three-commit head fdbe1c4ac (x86_64, rustc 1.96.1, nextest 0.9.143)
+
+head fdbe1c4ac
+fmt rc=0 secs=16
+gate-warm rc=0 secs=0
+gate-expects rc=0 secs=0
+gate-calvin rc=0 secs=1
+gate-plane rc=0 secs=0
+gate-raft rc=0 secs=2
+gate-sql rc=0 secs=90
+gate-dispatch rc=0 secs=102
+gate-frames rc=0 secs=0
+gate-parsing rc=0 secs=102
+gate-advisory rc=0 secs=1
+deny rc=0 secs=2
+clippy rc=101 secs=85
+fast-tests rc=100 secs=6699
+cluster-tests rc=0 secs=3437
+DONE
+
+cluster-tests.log:     Summary [2786.693s] 515 tests run: 515 passed (3 slow), 0 skipped
+fast-tests.log:     Summary [5052.155s] 22784 tests run: 22783 passed (6 slow), 1 timed out, 3 skipped
+   TRY 1 TMT [ 120.006s] (───────────) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+   TRY 2 TMT [ 120.005s] (22784/22784) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+
+error: unused import: `super::*`
+  --> nodedb-sql/src/types/plan/search_cells.rs:32:9
+   |
+32 |     use super::*;

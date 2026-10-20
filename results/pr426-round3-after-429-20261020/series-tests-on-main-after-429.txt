@@ -1,0 +1,28 @@
+# The series' tests run on upstream main after #429 (215b7505e), with none of the series' source
+
+## In-process (txn_bulk_prediction, txn_bulk_commit_parity, txn_calvin_empty_predicate, txn_calvin_transition_guard)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 1609 filtered out; finished in 9.19s
+
+## Three-node (txn_predicate_write, search_keys_cross_node, graph_rag_fusion_unlinked, graph_rag_fusion_naming)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 17.95s
+
+## Wire
+test result: FAILED. 39 passed; 10 failed; 0 ignored; 0 measured; 2659 filtered out; finished in 42.68s
+
+Failing wire tests on main:
+materialized_sum_cross_shard_http::ndjson_query_predicate_write_settles_a_cross_shard_sum ... FAILED
+materialized_sum_cross_shard_http::http_query_predicate_write_settles_a_cross_shard_sum ... FAILED
+materialized_sum_cross_shard_http::ws_rpc_predicate_write_settles_a_cross_shard_sum ... FAILED
+materialized_sum_same_request::two_predicate_updates_of_one_balance_are_refused_and_change_nothing ... FAILED
+materialized_sum_same_request::two_settling_updates_in_one_request_are_refused_and_change_nothing ... FAILED
+predicate_write_sequence_http::a_predicate_reads_the_point_write_before_it_across_two_vshards ... FAILED
+predicate_write_sequence_http::a_third_statement_reads_the_first_across_two_vshards ... FAILED
+predicate_write_two_statements_http::two_predicate_updates_in_one_http_request_each_touch_their_own_rows ... FAILED
+sql_hybrid_search::a_score_alias_named_doc_id_is_refused ... FAILED
+sql_hybrid_search::a_score_alias_with_the_reserved_prefix_is_refused ... FAILED
+test result: FAILED. 39 passed; 10 failed; 0 ignored; 0 measured; 2659 filtered out; finished in 42.68s
+
+What each failure says on main:
+- Seven of the eight predicate-write and sum-balance tests answer 500, SQLSTATE XX000: "calvin bulk predicate write reached overlay staging without ollp_predicted_surrogates for collection ...". The request never reaches the sum-balance guard. The eighth, the NDJSON settle test, fails an assertion on the count that the balance task adds.
+- a_score_alias_named_doc_id_is_refused: the search is accepted and answers rows with an empty id.
+- a_score_alias_with_the_reserved_prefix_is_refused tests a reserved prefix that main's design does not use. The test was dropped from the series.

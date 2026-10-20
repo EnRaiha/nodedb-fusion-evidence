@@ -1,0 +1,27 @@
+# Each commit of the three-commit series, checked out alone (rustc 1.96.1, x86_64)
+
+Head before the history fix: fdbe1c4ac. Head after: eb0c9b25b, identical tree.
+
+clippy-client-none rc=0
+clippy-client-native rc=0
+clippy-client-remote rc=0
+== commit 1 fix(txn): refuse several writes of one sum balance before a 
+c1-fmt rc=0
+c1-check rc=0
+c1-test rc=0
+== commit 2 fix(txn): run a request of several predicate writes as one i
+c2-fmt rc=1   (fixed in the rewritten history: fmt passes on every commit)
+c2-check rc=0
+c2-test rc=0
+== commit 3 fix(search): refuse a hybrid score alias named doc_id
+c3-fmt rc=0
+c3-check rc=0
+c3-test rc=0
+DONE
+
+## The three nodedb-client clippy commands of the workflow
+none, native, remote: rc=0 each
+
+c1-test test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2689 filtered out; finished in 5.76s
+c3-test test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 2686 filtered out; finished in 14.08s
+c2-test test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 2686 filtered out; finished in 18.09s
