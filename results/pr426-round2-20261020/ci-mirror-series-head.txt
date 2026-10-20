@@ -1,0 +1,38 @@
+# Local mirror of the CI Test workflow on the series head (11 commits, rustc 1.96.1, x86_64)
+
+Steps in the order of test.yml. rc is the exit code of the step, secs its wall time.
+
+head ea23abef0
+fmt rc=0 secs=17
+gate-warm rc=0 secs=0
+gate-expects rc=0 secs=0
+gate-calvin rc=0 secs=1
+gate-plane rc=0 secs=0
+gate-raft rc=0 secs=2
+gate-sql rc=0 secs=89
+gate-dispatch rc=0 secs=101
+gate-frames rc=0 secs=1
+gate-parsing rc=0 secs=101
+gate-advisory rc=0 secs=0
+deny rc=0 secs=4
+clippy rc=101 secs=163
+fast-tests rc=100 secs=6132
+cluster-tests rc=0 secs=3361
+DONE
+
+## Fast suite (nextest, workspace without nodedb-cluster-tests, --all-features, ci profile)
+     Summary [4856.476s] 22778 tests run: 22777 passed (4 slow), 1 timed out, 3 skipped
+
+## Cluster suite (nextest, nodedb-cluster-tests)
+     Summary [2779.400s] 523 tests run: 523 passed (2 slow, 1 flaky), 0 skipped
+  TRY 1 FAIL [   6.696s] (───────) nodedb-cluster-tests::common_suite cases::calvin_old_term_redo_copy::an_old_term_redo_copy_committed_by_the_new_leader_installs_once
+(the test above passed on its second try: nextest marks it flaky)
+
+## Clippy, workspace, -D warnings
+error: unused import: `super::*`
+  --> nodedb-sql/src/types/plan/search_cells.rs:32:9
+   |
+32 |     use super::*;
+--
+error: could not compile `nodedb-sql` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

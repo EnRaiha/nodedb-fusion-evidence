@@ -1,0 +1,40 @@
+# Red and green runs of the batch fixes
+
+Red: the new test run on the tree without the fix. Green: with it.
+
+## Two updates, the second matching what the first wrote (WHERE n = 1 then WHERE n = 2), plus two related shapes, RED
+test cases::predicate_write_sequence_http::a_later_update_matches_the_tag_an_earlier_one_wrote ... FAILED
+test cases::predicate_write_sequence_http::two_increments_of_one_row_in_one_request_both_apply ... ok
+test cases::predicate_write_sequence_http::a_third_statement_reads_the_first_across_two_vshards ... FAILED
+test cases::predicate_write_sequence_http::a_second_update_matches_the_value_the_first_wrote ... FAILED
+  left: []
+ right: ["a"]
+  left: ["v2", "keep"]
+ right: ["v3", "keep"]
+  left: ["2"]
+ right: ["3"]
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 2638 filtered out; finished in 5.74s
+
+## The same tests, GREEN
+test cases::predicate_write_sequence_http::two_increments_of_one_row_in_one_request_both_apply ... ok
+test cases::predicate_write_sequence_http::a_third_statement_reads_the_first_across_two_vshards ... ok
+test cases::predicate_write_sequence_http::a_second_update_matches_the_value_the_first_wrote ... ok
+test cases::predicate_write_sequence_http::a_later_update_matches_the_tag_an_earlier_one_wrote ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2638 filtered out; finished in 6.63s
+
+## A predicate after a point write across two vShards, RED
+test cases::predicate_write_sequence_http::a_predicate_reads_the_point_write_before_it_across_two_vshards ... FAILED
+  left: ["1"]
+ right: ["2"]
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2669 filtered out; finished in 4.15s
+
+## Two predicate updates of one sum balance, RED
+test cases::materialized_sum_same_request::two_predicate_updates_of_one_balance_are_refused_and_change_nothing ... FAILED
+test cases::materialized_sum_same_request::two_settling_updates_in_one_request_are_refused_and_change_nothing ... ok
+the request must be refused: {"status":"ok","rows":[{"affected":4}]}
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 2639 filtered out; finished in 4.49s
+
+## The same, GREEN
+test cases::materialized_sum_same_request::two_predicate_updates_of_one_balance_are_refused_and_change_nothing ... ok
+test cases::materialized_sum_same_request::two_settling_updates_in_one_request_are_refused_and_change_nothing ... ok
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 2623 filtered out; finished in 17.44s

@@ -1,0 +1,13 @@
+# nodedb-vector search_allocations_do_not_scale_with_distance_count
+
+## On the series head, run alone
+   TRY 1 TMT [ 120.009s] (───) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+   TRY 2 TMT [ 120.010s] (1/1) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+     Summary [ 242.025s] 1 test run: 0 passed, 1 timed out, 532 skipped
+
+## On upstream main 8b1318b80 (no series code), run alone
+   TRY 1 TMT [ 120.009s] (───) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+   TRY 2 TMT [ 120.008s] (1/1) nodedb-vector::search_allocations search_allocations_do_not_scale_with_distance_count
+     Summary [ 242.026s] 1 test run: 0 passed, 1 timed out, 532 skipped
+
+The series changes no file in nodedb-vector. The test times out at the 120 s limit on both trees.

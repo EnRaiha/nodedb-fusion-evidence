@@ -1,0 +1,94 @@
+upstream #429 chunks: 261; series chunks: 102
+
+## F1 matched set from the staging scan
+  #429 best chunks:
+    0.649  nodedb/src/data/executor/handlers/control/calvin/static_stage.rs#1
+    0.632  nodedb/src/data/executor/handlers/control/calvin_overlay_stage_bulk.rs#0
+    0.630  nodedb/src/data/executor/handlers/bulk_dml/txn_match.rs#2
+    0.626  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_delete.rs#1
+  our best chunks:
+    0.699  nodedb/src/control/server/shared/session/staging_gate.rs#0  (fc55c3df1 fix(txn): stage a predicate write i)
+    0.698  nodedb/src/control/server/shared/sql/staged_matched.rs#0  (fc55c3df1 fix(txn): stage a predicate write i)
+    0.659  nodedb/src/control/server/shared/session/staging_gate.rs#1  (fc55c3df1 fix(txn): stage a predicate write i)
+## F2 transitions before Calvin votes
+  #429 best chunks:
+    0.580  nodedb/src/data/executor/handlers/control/calvin/shared.rs#0
+    0.570  nodedb/src/data/executor/handlers/control/calvin/static_stage.rs#1
+    0.551  nodedb/src/data/executor/handlers/point/apply_put/enforce.rs#0
+    0.547  nodedb/src/data/executor/handlers/control/calvin/active_passive.rs#0
+  our best chunks:
+    0.701  nodedb/src/data/executor/handlers/control/calvin_overlay_stage_bulk.rs#0  (c4f7a11be fix(txn): commit a block that write)
+    0.579  nodedb/src/data/executor/handlers/transaction/stage_write/stage_point_document.rs#0  (c4f7a11be fix(txn): commit a block that write)
+    0.533  nodedb/src/control/cluster/calvin/scheduler/driver/core/commit_resolve/vote.rs#1  (c7dcd85b1 fix(calvin): log a refused stage an)
+## F3 batch sees earlier writes
+  #429 best chunks:
+    0.609  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_delete.rs#2
+    0.608  nodedb/src/control/planner/calvin/txn_predict.rs#0
+    0.591  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_delete.rs#1
+    0.590  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_dispatch.rs#1
+  our best chunks:
+    0.695  nodedb/src/control/server/shared/txn_route/joined.rs#0  (bb3a63a34 fix(txn): run a request of several )
+    0.687  nodedb/src/control/planner/calvin/settling_writes.rs#1  (3a457c6af fix(txn): refuse several writes of )
+    0.681  nodedb/src/control/planner/calvin/settling_writes.rs#0  (3a457c6af fix(txn): refuse several writes of )
+## F4 temporal identity
+  #429 best chunks:
+    0.695  nodedb/src/data/executor/handlers/text_rows.rs#0
+    0.680  nodedb/src/data/executor/enforcement/materialized_sum/rmw.rs#0
+    0.642  nodedb/src/data/executor/handlers/point/delete_version.rs#2
+    0.641  nodedb/src/data/executor/handlers/transaction/stage_write/stage_current_body.rs#0
+  our best chunks:
+    0.668  nodedb/src/data/executor/handlers/graph_rag_stages.rs#0  (051ad0633 fix(search): name a search hit by i)
+    0.584  nodedb/src/data/executor/handlers/graph_rag_stages.rs#1  (329f3317d fix(graph): GRAPH RAG FUSION names )
+    0.580  nodedb/src/control/planner/calvin/dependent_recon_bulks.rs#1  (9dfc311cd fix(txn): keep the settlement reads)
+## F5 owner key vs score alias
+  #429 best chunks:
+    0.555  nodedb/src/control/server/graph_dispatch/rag_fusion/coord.rs#1
+    0.536  nodedb/src/data/executor/handlers/graph_rag.rs#1
+    0.502  nodedb/src/control/server/response_translate/text_hybrid.rs#1
+    0.475  nodedb/src/data/executor/handlers/convert.rs#2
+  our best chunks:
+    0.719  nodedb/src/control/planner/sql_plan_convert/scan/search.rs#0  (051ad0633 fix(search): name a search hit by i)
+    0.630  nodedb-types/src/row_identity.rs#0  (051ad0633 fix(search): name a search hit by i)
+    0.622  nodedb/src/data/executor/response_codec/hits.rs#0  (051ad0633 fix(search): name a search hit by i)
+## Sum guard
+  #429 best chunks:
+    0.593  nodedb/src/data/executor/enforcement/materialized_sum/rmw.rs#0
+    0.564  nodedb/src/data/executor/handlers/control/calvin/static_stage.rs#1
+    0.554  nodedb/src/data/executor/handlers/bulk_dml/update.rs#2
+    0.549  nodedb-test-support/src/tx_commit.rs#0
+  our best chunks:
+    0.823  nodedb/src/control/planner/calvin/settling_writes.rs#0  (3a457c6af fix(txn): refuse several writes of )
+    0.623  nodedb/src/control/server/shared/txn_route/joined.rs#1  (bb3a63a34 fix(txn): run a request of several )
+    0.621  nodedb/src/control/planner/calvin/settling_writes.rs#1  (3a457c6af fix(txn): refuse several writes of )
+## Settlement reads
+  #429 best chunks:
+    0.648  nodedb/src/data/executor/enforcement/materialized_sum/rmw.rs#0
+    0.595  nodedb/src/data/executor/handlers/control/calvin/static_stage.rs#1
+    0.560  nodedb/src/data/executor/handlers/control/calvin/static_stage.rs#2
+    0.548  nodedb/src/diag/context/data_plane.rs#0
+  our best chunks:
+    0.647  nodedb/src/control/server/shared/txn_route/joined.rs#1  (bb3a63a34 fix(txn): run a request of several )
+    0.611  nodedb/src/data/executor/handlers/control/calvin_overlay_stage_bulk.rs#0  (c4f7a11be fix(txn): commit a block that write)
+    0.607  nodedb/src/control/planner/calvin/settling_writes.rs#0  (3a457c6af fix(txn): refuse several writes of )
+
+## our file vs #429 same-file chunks (cosine of the two diffs of one file)
+    0.804  nodedb/src/control/planner/calvin/dependent_recon.rs
+    0.928  nodedb/src/control/planner/calvin/mod.rs
+    0.798  nodedb/src/control/planner/calvin/preexec.rs
+    0.856  nodedb/src/control/planner/calvin/retry_loop.rs
+    0.919  nodedb/src/control/server/graph_dispatch/rag_fusion/coord.rs
+    0.970  nodedb/src/control/server/response_translate/dispatch.rs
+    0.970  nodedb/src/control/server/response_translate/mod.rs
+    0.924  nodedb/src/control/server/response_translate/rag_fusion.rs
+    0.917  nodedb/src/control/server/response_translate/text_hybrid.rs
+    0.934  nodedb/src/control/server/shared/ddl/neutral/graph_ops/rag_fusion.rs
+    0.676  nodedb/src/control/server/shared/session/expander_stage.rs
+    0.892  nodedb/src/control/server/shared/session/staging_gate.rs
+    0.743  nodedb/src/data/executor/handlers/control/calvin_overlay_stage_bulk.rs
+    0.943  nodedb/src/data/executor/handlers/graph_rag.rs
+    0.881  nodedb/src/data/executor/handlers/graph_rag_triple.rs
+    0.746  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_delete.rs
+    0.821  nodedb/src/data/executor/handlers/transaction/stage_write/stage_bulk_update.rs
+    0.869  nodedb/src/data/executor/handlers/vector_search_exec.rs
+    0.887  nodedb/src/data/executor/response_codec/hits.rs
+    0.792  nodedb/src/data/executor/response_codec/raw.rs
